@@ -18,6 +18,7 @@ PATCHES=(
 	${FILESDIR}/05_scratchpad.diff
 	${FILESDIR}/06_swallow.diff
 	${FILESDIR}/07_bulkkill.diff
+	${FILESDIR}/08_noborderselflickerfix.diff
 	${FILESDIR}/50_larger-font.diff
 	${FILESDIR}/51_colors.diff
 	${FILESDIR}/52_keys.diff
