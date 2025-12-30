@@ -1,0 +1,17 @@
+diff --git i/sh/prev/video.sh w/sh/prev/video.sh
+index 3e85e4f..d3d9f74 100644
+--- i/sh/prev/video.sh
++++ w/sh/prev/video.sh
+@@ -1,7 +1,11 @@
+ # video: ffmpegthumbnailer
+ 
+ video() {
+-	ffmpegthumbnailer -i "$f" -o "$cache_f" -s 0 -t 50% 2>/dev/null
++	_wh=$(ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x "$f")
++	_w=$(echo "${_wh%%x*}/4" | bc)
++	_h=$(echo "${_wh##*x}/4" | bc)
++	thumbnail-grid -r 4 -c 4 -q 100 -w $_w -h $_h "$f" "$cache_f" 2>/dev/null
++	magick "$cache_f" "JPG:$cache_f"
+ }
+ 
+ convert_and_show_image video
