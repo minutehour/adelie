@@ -1,0 +1,22 @@
+diff --git i/main.c w/main.c
+index f495f5b..a849732 100644
+--- i/main.c
++++ w/main.c
+@@ -214,8 +214,6 @@ int main(int argc, char *argv[]) {
+     int64_t seek_target = (shift ? i + 1 : i) * interval;
+     int64_t seek_target_sec = av_rescale(seek_target, time_base.num, time_base.den);
+ 
+-    printf("processing frame %d/%d (at %02d:%02d:%02d)\n", i + 1, imgCount,
+-           (int)(seek_target_sec / 3600), (int)((seek_target_sec / 60) % 60), (int)(seek_target_sec % 60));
+     if (av_seek_frame(inputCtx, videoStreamIdx, seek_target,
+                       AVSEEK_FLAG_BACKWARD) < 0) {
+       fprintf(stderr, "Error while seeking\n");
+@@ -265,8 +263,6 @@ int main(int argc, char *argv[]) {
+     }
+   }
+ 
+-  printf("saving output file\n");
+-
+   ret = save_frame_to_webp(frameResult, outputFilePath, quality);
+ 
+   av_freep(frameResult->data);
