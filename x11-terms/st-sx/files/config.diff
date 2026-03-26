@@ -1,0 +1,130 @@
+diff --git i/config.def.h w/config.def.h
+index 22adcdf..652626e 100644
+--- i/config.def.h
++++ w/config.def.h
+@@ -5,19 +5,21 @@
+  *
+  * Normal font. See http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++static char *font = "Cozette:size=20:antialias=false:autohint=false";
+ 
+ /* Bold font. Optional. Note: The font size is set automatically for this font. */
+-static char *font_bold;
++static char *font_bold = "Cozette:size=20:antialias=false:autohint=false";
+ 
+ /* Italic font. Optional. Note: The font size is set automatically for this font. */
+-static char *font_italic;
++static char *font_italic = "Cozette:size=20:antialias=false:autohint=false";
+ 
+ /* Bold italic font. Optional. Note: The font size is set automatically for this font. */
+-static char *font_bolditalic;
++static char *font_bolditalic = "Cozette:size=20:antialias=false:autohint=false";
+ 
+ /* Spare fonts */
+ static char *font2[] = {
++	"IBM Plex Mono:pixelsize=20:antialias=true:autohint=false",
++	"Unifont:size=20:antialias=false:autohint=false",
+ /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
+ /*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
+ };
+@@ -180,7 +181,7 @@ int ligatures = 0;
+  * need to comment out the ligature lines in config.mk to avoid compiling and
+  * linking the HarfBuzz code.
+  */
+-#define DISABLE_LIGATURES 0
++#define DISABLE_LIGATURES 1
+ 
+ /*
+  * Font features for ligatures.
+@@ -271,33 +272,33 @@ float alphaUnfocused = 0.6;
+ /* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+ 	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
++	"#152126", /* black */
++	"#b90440", /* red */
++	"#07b307", /* green */
++	"#d7ac00", /* yellow */
++	"#876bd6", /* blue */
++	"#db498b", /* purple */
++	"#41c7d1", /* cyan */
++	"#c0b1c2", /* white */
+ 
+ 	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
++	"#5f5e66", /* black */
++	"#ff246d", /* red */
++	"#00ed00", /* green */
++	"#ffd324", /* yellow */
++	"#7442ff", /* blue */
++	"#ff2088", /* purple */
++	"#13efff", /* cyan */
++	"#e1e1e6", /* white */
+ 
+ 	[255] = 0,
+ 
+ 	/* more colors can be added after 255 to use with DefaultXX */
+-	"#cccccc", /* 256 -> cursor */
+-	"#555555", /* 257 -> rev cursor */
+-	"gray90",  /* 258 -> foreground */
+-	"black",   /* 259 -> background */
+-	"black",   /* 260 -> background unfocused */
++	"#e1e1e6", /* 256 -> cursor */
++	"#5f5e66", /* 257 -> rev cursor */
++	"#c0b1c2", /* 258 -> foreground */
++	"#152126", /* 259 -> background */
++	"#152126", /* 260 -> background unfocused */
+ 	"gray90",  /* 261 -> visual bell */
+ };
+ 
+@@ -335,14 +336,14 @@ unsigned int kbselectbg = 258;
+ unsigned int scrollbackindicatorfg = 258;
+ 
+ /* Bold text is not rendered in bright color. 0: off, 1: on */
+-unsigned int bold_is_not_bright = 1;
++unsigned int bold_is_not_bright = 0;
+ 
+ /*
+  * Dynamic cursor color
+  * 0: the cursor color is fixed (default st behavior)
+  * 1: the cursor uses reverse colors based on the colors of the text cell
+ */
+-unsigned int dynamic_cursor_color = 1;
++unsigned int dynamic_cursor_color = 0;
+ 
+ /*
+  * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
+diff --git i/config.mk w/config.mk
+index 0a02aee..89bf364 100644
+--- i/config.mk
++++ w/config.mk
+@@ -19,10 +19,10 @@ XRENDER = -lXrender
+ 
+ # ligatures (you need to comment out the four lines below if ligatures are
+ # permanently disabled in config.h)
+-LIGATURES_C = hb.c
+-LIGATURES_H = hb.h
+-LIGATURES_INC = `$(PKG_CONFIG) --cflags harfbuzz`
+-LIGATURES_LIBS = `$(PKG_CONFIG) --libs harfbuzz`
++#LIGATURES_C = hb.c
++#LIGATURES_H = hb.h
++#LIGATURES_INC = `$(PKG_CONFIG) --cflags harfbuzz`
++#LIGATURES_LIBS = `$(PKG_CONFIG) --libs harfbuzz`
+ 
+ # sixel
+ SIXEL_C = sixel.c sixel_hls.c
